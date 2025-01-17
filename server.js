@@ -1,4 +1,4 @@
-const express = require('express');
+cconst express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
@@ -9,16 +9,20 @@ const PORT = process.env.PORT || 10000;
 let reservations = [];
 let adminCredentials = { username: 'admin', password: 'password123' }; // À modifier pour plus de sécurité
 
-// Middleware
-app.use(bodyParser.json());
-
 // Configuration CORS
 const corsOptions = {
-  origin: 'https://okromar.github.io', // Remplacez par votre domaine frontend
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type'],
+  origin: 'https://okromar.github.io', // Origine autorisée
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Méthodes autorisées
+  allowedHeaders: ['Content-Type'], // En-têtes autorisés
 };
+
 app.use(cors(corsOptions));
+
+// Répondre aux requêtes OPTIONS (préliminaires)
+app.options('*', cors(corsOptions));
+
+// Middleware
+app.use(bodyParser.json());
 
 // Routes
 
@@ -100,6 +104,10 @@ app.get('/admin/statistics', (req, res) => {
 });
 
 // Lancer le serveur
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
