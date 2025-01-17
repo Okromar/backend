@@ -11,7 +11,14 @@ let adminCredentials = { username: 'admin', password: 'password123' }; // À mod
 
 // Middleware
 app.use(bodyParser.json());
-app.use(cors());
+
+// Configuration CORS
+const corsOptions = {
+  origin: 'https://okromar.github.io', // Remplacez par votre domaine frontend
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type'],
+};
+app.use(cors(corsOptions));
 
 // Routes
 
@@ -96,3 +103,4 @@ app.get('/admin/statistics', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+
